@@ -38,16 +38,12 @@ abstract class Appdb : RoomDatabase() {
                         // Create triggers here
                         db.execSQL(
                             """
-                            CREATE TRIGGER insert_money_on_booking
+                            CREATE TRIGGER insert_money_after_booking
                             AFTER INSERT ON AllBooking
+                            FOR EACH ROW
                             BEGIN
-                                INSERT INTO Money(transactionId, bookingId, hotelId, payment)
-                                VALUES (
-                                    (SELECT hex(randomblob(4)) || '-' || hex(randomblob(2)) || '-' || hex(randomblob(2)) || '-' || hex(randomblob(2)) || '-' || hex(randomblob(6))),
-                                    NEW.bookingId,
-                                    NEW.hotelId,
-                                    NEW.payment
-                                );
+                                INSERT INTO Money (transactionId, bookingId, hotelId, payment)
+                                VALUES (NEW.bookingId, NEW.bookingId, NEW.hotelId, NEW.payment);
                             END;
                         """.trimIndent()
                         )

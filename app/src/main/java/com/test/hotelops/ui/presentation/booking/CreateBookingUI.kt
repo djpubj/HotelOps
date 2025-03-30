@@ -22,7 +22,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun CreateBookingUI(navController: NavController, userId: String) {
     val viewModel = viewModel(modelClass = BookingViewModel::class.java)
-    val moneyviewModel = viewModel(modelClass = MoneyViewModel::class.java)
     val AuthviewModel = viewModel(modelClass = AuthViewmodel::class.java)
     val CustomerViewModel = viewModel(modelClass = CustomerViewModel::class.java)
     val context = LocalContext.current
@@ -116,7 +115,6 @@ fun CreateBookingUI(navController: NavController, userId: String) {
                             )
                             CustomerViewModel.insertCustomer(newcustomer)
                             viewModel.insertBooking(newBooking)
-                            moneyviewModel.insertMoney(Money(bookingId = newBooking.bookingId, hotelId = newBooking.hotelId, payment = payment.toInt()))
                             Toast.makeText(context, "Booking Created!", Toast.LENGTH_SHORT).show()
                             navController.navigateUp()
                         } else {
